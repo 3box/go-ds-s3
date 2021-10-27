@@ -73,7 +73,9 @@ var KeyTransforms = map[KeyTransform]func(ds.Key) string{
 	},
 	NextToLast2: func(k ds.Key) string {
 		s := k.String()
-		return s[len(s)-2:] + "/" + s
+		offset := 1
+		start := len(s) - 2 - offset
+		return s[start:start+2] + "/" + s
 	},
 }
 
