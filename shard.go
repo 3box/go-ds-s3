@@ -36,7 +36,7 @@ func Identity() *ShardIdV1 {
 		funName: "identity",
 		param:   0,
 		fun: func(noslash string) string {
-			return noslash
+			return ""
 		},
 	}
 }
