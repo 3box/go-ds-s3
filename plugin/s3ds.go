@@ -98,14 +98,14 @@ func (s3p S3Plugin) DatastoreConfigParser() fsrepo.ConfigFromMap {
 			}
 		}
 
-		var keyTransform string
-		if v, ok := m["keyTransform"]; ok {
+		var shardFunc string
+		if v, ok := m["shardFunc"]; ok {
 			if v == "" {
-				keyTransform = "default"
+				shardFunc = "/repo/s3/shard/v1/identity/0"
 			} else {
-				keyTransform, ok = v.(string)
+				shardFunc, ok = v.(string)
 				if !ok {
-					return nil, fmt.Errorf("s3ds: keyTransform is not a valid key transform method")
+					return nil, fmt.Errorf("s3ds: shardFunc is not a valid string")
 				}
 			}
 		}
@@ -121,7 +121,7 @@ func (s3p S3Plugin) DatastoreConfigParser() fsrepo.ConfigFromMap {
 				Workers:             workers,
 				RegionEndpoint:      endpoint,
 				CredentialsEndpoint: credentialsEndpoint,
-				KeyTransform:        keyTransform,
+				ShardFunc:           shardFunc,
 			},
 		}, nil
 	}

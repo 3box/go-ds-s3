@@ -73,7 +73,7 @@ The config file should include the following:
             "rootDirectory": "$bucketsubdirectory",
             "accessKey": "",
             "secretKey": "",
-            "keyTransform": "$keytransformmethod"
+            "shardFunc": "$shardfunc"
           },
           "mountpoint": "/blocks",
           "prefix": "s3.datastore",
@@ -83,16 +83,19 @@ The config file should include the following:
 
 If the access and secret key are blank they will be loaded from the usual ~/.aws/.
 
-The key transform allows you to specify how data is stored behind S3 keys. It must be one of the available methods:
+The shard function allows you to specify how data is stored behind S3 keys. It must be one of the available methods:
 
-`default`
+`/repo/s3/shard/v1/identity/0`
 - No sharding.
 
-`suffix`
-- Shards by storing block data at a key with a `data` suffix. E.g. `CIQJ7IHPGOFUJT5UMXIW6CUDSNH6AVKMEOXI3UM3VLYJRZUISUMGCXQ/data`
+`/repo/s3/shard/v1/prefix/<n>`
+- Shards by storing block data at a key with the n first characters of its CID. E.g. `CIQJ7IHP/CIQJ7IHPGOFUJT5UMXIW6CUDSNH6AVKMEOXI3UM3VLYJRZUISUMGCXQ`
 
-`next-to-last/2`
-- Shards by storing block data based on the second to last 2 characters of its key. E.g. `CX/CIQJ7IHPGOFUJT5UMXIW6CUDSNH6AVKMEOXI3UM3VLYJRZUISUMGCXQ`
+`/repo/s3/shard/v1/suffix/<n>`
+- Shards by storing block data at a key with the n last characters of its CID. E.g. `CXQ/CIQJ7IHPGOFUJT5UMXIW6CUDSNH6AVKMEOXI3UM3VLYJRZUISUMGCXQ`
+
+`/repo/s3/shard/v1/next-to-last/<n>`
+- Shards by storing block data at a key with the second to last n characters of its CID. E.g. `CX/CIQJ7IHPGOFUJT5UMXIW6CUDSNH6AVKMEOXI3UM3VLYJRZUISUMGCXQ`
 
 If you are on another S3 compatible provider, e.g. Linode, then your config should be:
 
@@ -112,7 +115,7 @@ If you are on another S3 compatible provider, e.g. Linode, then your config shou
             "regionEndpoint": "us-east-1.linodeobjects.com",
             "accessKey": "",
             "secretKey": "",
-            "keyTransform": "$keytransformmethod"
+            "shardFunc": "$shardfunc"
           },
           "mountpoint": "/blocks",
           "prefix": "s3.datastore",
@@ -137,7 +140,9 @@ This repository falls under the IPFS [Code of Conduct](https://github.com/ipfs/c
 ### Local Development
 
 ```
+go install
 go mod vendor
+go test
 ```
 
 ### Want to hack on IPFS?
