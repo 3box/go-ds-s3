@@ -47,7 +47,7 @@ func TestS3PluginDatastoreConfigParser(t *testing.T) {
 				"regionEndpoint":      "someendpoint",
 				"workers":             42.0,
 				"credentialsEndpoint": "somecredendpoint",
-				"keyTransform":        "default",
+				"shardFunc":           "/repo/s3/shard/v1/next-to-last/2",
 			},
 			Want: &S3Config{cfg: s3ds.Config{
 				Region:              "someregion",
@@ -59,7 +59,7 @@ func TestS3PluginDatastoreConfigParser(t *testing.T) {
 				RegionEndpoint:      "someendpoint",
 				Workers:             42,
 				CredentialsEndpoint: "somecredendpoint",
-				KeyTransform:        "default",
+				ShardFunc:           "/repo/s3/shard/v1/next-to-last/2",
 			}},
 		},
 	}
