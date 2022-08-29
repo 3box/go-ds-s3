@@ -24,14 +24,14 @@ As go plugins can be finicky to correctly compile and install, you may want to c
 > export GO111MODULE=on
 
 # Clone go-ipfs.
-> git clone https://github.com/ipfs/go-ipfs
-> cd go-ipfs
+> git clone https://github.com/ipfs/kubo
+> cd kubo
 
 # Pull in the datastore plugin (you can specify a version other than latest if you'd like).
-> go get github.com/ipfs/go-ds-s3/plugin@latest
+> go get github.com/ukstv/go-ds-s3/plugin@latest
 
 # Add the plugin to the preload list.
-> echo "s3ds github.com/ipfs/go-ds-s3/plugin 0" >> plugin/loader/preload_list
+> echo "s3ds github.com/ukstv/go-ds-s3/plugin 0" >> plugin/loader/preload_list
 
 # ( this first pass will fail ) Try to build go-ipfs with the plugin
 > make build
